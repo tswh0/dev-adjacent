@@ -1,15 +1,14 @@
 {{ define "main" }}
-<main class="page__main">
+<main class="page__main" id="main" tabindex="-1">
   <section class="gem-window page__doc" aria-label="{{ .Title }}">
-    <div class="gem-titlebar"><div class="gem-title"><span>{{ .Title | upper }}.TXT</span></div></div>
+    <div class="gem-titlebar"><div class="gem-title"><h1><span>{{ .Title | upper }}.TXT</span></h1></div></div>
     <div class="gem-infoline">{{ len .Data.Terms }} terms</div>
     <div class="gem-body">
       <article class="doc">
-        <h1 class="page-title">{{ .Title }}</h1>
         <p>{{ if eq .Data.Singular "tag" }}Every post carries one or more tags. The number is how many posts use it.{{ else }}Posts by language.{{ end }}</p>
         <ul class="tag-cloud">
         {{ range .Data.Terms.Alphabetical }}
-          <li><a class="tag" href="{{ .Page.RelPermalink }}">{{ if eq $.Data.Singular "tag" }}#{{ end }}{{ .Page.Title }}</a> <span>({{ .Count }})</span></li>
+          <li><a class="tag" href="{{ .Page.RelPermalink }}">{{ if eq $.Data.Singular "tag" }}#{{ end }}{{ .Page.Data.Term }}</a> <span>({{ .Count }})</span></li>
         {{ end }}
         </ul>
       </article>

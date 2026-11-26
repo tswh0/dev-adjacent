@@ -1,14 +1,18 @@
 {{ define "main" }}
-<main class="page__main page__main--single">
-  <section class="gem-dialog" role="alertdialog" aria-label="404">
+<main class="page__main page__main--single" id="main" tabindex="-1">
+  <section class="gem-dialog" aria-labelledby="not-found">
     <div class="gem-titlebar"><div class="gem-title"><span>404</span></div></div>
     <div class="gem-dialog__body">
+      <h1 class="dialog-title" id="not-found">Cannot find that page</h1>
       <div class="gem-alert">
         <div class="gem-alert__icon">?</div>
-        <div class="gem-alert__text">Cannot find that page. It may have moved.</div>
+        <div class="gem-alert__text">It may have moved, or the link is wrong.</div>
       </div>
     </div>
-    <div class="gem-dialog__buttons"><a class="gem-btn is-default" href="{{ "/" | relURL }}">Home</a></div>
+    <div class="gem-dialog__buttons">
+      <a class="gem-btn is-default" href="{{ "/" | relURL }}">Home</a>
+      <a class="gem-btn" href="{{ "/posts/" | relURL }}">All posts</a>
+    </div>
   </section>
 </main>
 {{ end }}

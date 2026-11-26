@@ -1,11 +1,10 @@
 {{ define "main" }}
-<main class="page__main">
+<main class="page__main" id="main" tabindex="-1">
   <section class="gem-window page__doc" aria-label="{{ .Title }}">
-    <div class="gem-titlebar"><div class="gem-title"><span>{{ .Title | upper }}.TXT</span></div></div>
-    <div class="gem-infoline">{{ len .Pages }} posts</div>
+    <div class="gem-titlebar"><div class="gem-title"><h1><span>{{ .Title | upper }}.TXT</span></h1></div></div>
+    <div class="gem-infoline">{{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }}</div>
     <div class="gem-body">
       <article class="doc">
-        <h1 class="page-title">{{ if eq .Data.Singular "tag" }}#{{ end }}{{ .Title }}</h1>
         {{ partial "post-list" .Pages }}
         <p class="doc__end"><a class="gem-btn" href="{{ "/tags/" | relURL }}">&lt;- all tags</a></p>
       </article>

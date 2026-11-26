@@ -1,9 +1,9 @@
 {{ define "main" }}
 {{ $posts := where site.RegularPages "Section" "posts" }}
-<main class="page__main">
+<main class="page__main" id="main" tabindex="-1">
   <section class="gem-window page__doc" aria-label="{{ if .IsHome }}DEV.TXT{{ else }}{{ .Title }}.TXT{{ end }}">
-    <div class="gem-titlebar"><div class="gem-title"><span>{{ if .IsHome }}DEV.TXT{{ else }}{{ .Title | upper }}.TXT{{ end }}</span></div></div>
-    <div class="gem-infoline">{{ if .IsHome }}{{ len $posts }} posts · {{ len site.Taxonomies.tags }} tags · CC0 1.0{{ else }}{{ .Title }}{{ end }}</div>
+    <div class="gem-titlebar"><div class="gem-title">{{ if .IsHome }}<span>DEV.TXT</span>{{ else }}<h1><span>{{ .Title | upper }}.TXT</span></h1>{{ end }}</div></div>
+    <div class="gem-infoline">{{ if .IsHome }}updated {{ with $posts.ByDate.Reverse }}{{ (index . 0).Date.Format "2006-01-02" }}{{ end }}{{ else }}{{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }}{{ end }}</div>
     <div class="gem-body">
       <article class="doc">
       {{ if .IsHome }}
@@ -12,7 +12,6 @@
         {{ partial "post-list" $posts }}
         {{ with site.GetPage "posts/links.md" }}{{ partial "content" . }}{{ end }}
       {{ else }}
-        <h1 class="page-title">{{ .Title }}</h1>
         {{ partial "post-list" .Pages }}
       {{ end }}
       </article>

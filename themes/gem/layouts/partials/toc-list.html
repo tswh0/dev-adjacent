@@ -1,3 +1,4 @@
 {{- with .TableOfContents -}}
-<div class="toc">{{ partial "normalize" . }}</div>
+{{- $toc := . | replaceRE " id=\"?TableOfContents\"?" "" | replaceRE "<nav" "<nav aria-label=\"On this page\"" -}}
+<div class="toc">{{ partial "normalize" $toc }}</div>
 {{- end -}}
