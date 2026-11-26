@@ -9,7 +9,7 @@ slug: kobink
 ---
 My Kobo can only shop at the Kobo store. Everything I already own has to be copied over with a cable, and after the third time I got tired of it. Calibre and calibre-web would have solved that, but I never used Calibre. My books are just files in a folder, and those are the ones I want on the reader.
 
-So I wrote a small server that answers like the store does. It's called Kobink. The protocol work comes from [potatoeggy/kobink](https://github.com/potatoeggy/kobink), I fixed the build, added what I was missing and put it in a container.
+So I wrote a small server that answers like the store does. It's called Kobink. The protocol work comes from [potatoeggy/kobink](https://github.com/potatoeggy/kobink); I fixed the build, added what I was missing and put it in a container.
 
 ## How it works
 
@@ -39,6 +39,7 @@ services:
     image: ghcr.io/tswh0/kobink:latest
     container_name: kobink
     restart: unless-stopped
+    user: "1000:1000"
     ports:
       - "3000:3000"
     environment:
@@ -49,6 +50,13 @@ services:
 ```
 
 `PUBLIC_URL` has to be the address the reader will use later. It ends up inside every download link, so a hostname that only the container can resolve won't help.
+
+The image runs as uid 1000. Give it the data folder once, and make sure the library is readable by that user:
+
+```bash
+mkdir -p data
+chown -R 1000:1000 data
+```
 
 ### 2. Starting it
 
@@ -77,12 +85,29 @@ api_endpoint=http://192.168.1.10:3000/PASTE-YOUR-KEY-HERE/kobo
 
 Replace the placeholder with the key from the log, eject, press Sync. The path ends at `/kobo`, the device appends `/v1` by itself. If you leave `/v1` in, you get a 404, and the container log tells you so.
 
-> **Important**: Treat the link like a password. Whoever has it can download every book in the folder.
-> {.warning }
+> Treat the link like a password. Whoever has it can download every book in the folder.
 
 ### 2. When nothing arrives
 
 All books in the folder come over in the first sync, covers included. If the shelf stays empty, watch `docker compose logs -f kobink` while pressing Sync. In my experience it's the URL almost every time, usually a `PUBLIC_URL` that the reader can't reach.
+
+## The browser
+
+The library is also the root of the web UI. Open the same address on a phone or laptop, paste the key, and you get a shelf of covers; tapping one opens the book. EPUBs paginate, KCC books flip page by page. Where you stop on the device is where the browser opens, and a page turned in the browser reaches the device at its next sync. If the two disagree, the book with the most pages read wins.
+
+It's an extension of the Kobo, not a reader of its own: no highlights, notes, dictionary or library management. Add it to a phone's home screen and it opens full screen. A fixed-layout book can be saved from the reading bar and read offline; progress made offline lands on the server at the next open.
+
+## Drop a book
+
+Upload lives at `/drop`: drag EPUB, CBZ or PDF, several at once. EPUB is copied as it is. CBZ and PDF are converted with KCC for the reader you pick, which needs the bigger image and a writable library:
+
+```yaml
+image: ghcr.io/tswh0/kobink:conversion
+volumes:
+  - /media/Books:/library:rw
+```
+
+Deleting a book on the reader moves the file into `.kobink-trash/`. `LIBRARY_TRASH=off` deletes it outright.
 
 ## Manga and series
 
@@ -92,24 +117,18 @@ Volumes also arrive as a series. The name comes from the book's metadata, or fro
 
 ## What I changed from the original
 
-The upstream repository doesn't compile as published, one source file is missing, and the download links point at the author's own domain. Both are fixed here. On top of that:
-
-- a key in the URL, generated on the first start
-- covers cut on the server and cached on disk
-- the fixed-layout flag for KCC books
-- series detection from metadata or title
-- incremental sync and gzip, so the tenth sync is a matter of milliseconds
-- the folder rescanned every ten minutes
-- no database, the SQL dependencies are gone
+The upstream repository doesn't compile as published and one source file is missing; its download links also point at the author's own domain. I fixed that, then added the key, server-side covers, the fixed-layout flag, series detection, incremental sync and gzip, a browser reader and a drop page. There is no database.
 
 ## Notes
 
 - `LIBRARY_REFRESH_SECONDS` sets the rescan interval, `0` turns it off.
-- Set `API_KEY` if you want to choose the key yourself.
+- `API_KEY` picks the key yourself instead of the generated one.
+- `COVER_CACHE_DAYS` and `TRASH_DAYS` (default 30, `0` keeps forever) prune the cover cache and the trash.
+- HTTP on your LAN is fine. Behind a proxy, use HTTPS and keep the link to yourself. Offline copies need HTTPS or localhost; the reader works either way.
 - A book that refuses to update can be deleted on the device and synced again.
 
 ## Source
 
-There's an install page at [kobink.ewlf.de](https://kobink.ewlf.de) and the code at [github.com/tswh0/kobink](https://github.com/tswh0/kobink). 
+The code is at [github.com/tswh0/kobink](https://github.com/tswh0/kobink). AGPL-3.0, like the original.
 
-One container, one folder, and the shelf fills itself. Happy reading!
+One container, one folder of books. Happy reading!
