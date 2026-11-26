@@ -7,7 +7,10 @@
     <div class="gem-body">
       <article class="doc">
       {{ if .IsHome }}
-        {{ with site.GetPage "posts/about.md" }}<div class="hero">{{ partial "content" . }}</div>{{ end }}
+        <div class="home-intro">
+          <img class="home-mark" src="{{ "logo-mark.svg" | relURL }}" width="48" height="48" alt="dev adjacent">
+          <div class="home-intro-copy">{{ with site.GetPage "posts/about.md" }}<div class="hero">{{ partial "content" . }}</div>{{ end }}</div>
+        </div>
         <h2 id="posts">blog posts</h2>
         {{ partial "post-list" $posts }}
         {{ with site.GetPage "posts/links.md" }}{{ partial "content" . }}{{ end }}

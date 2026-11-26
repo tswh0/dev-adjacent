@@ -210,6 +210,10 @@ a.gem-btn { text-decoration: none; }
 
 .gem-title h1 { margin: 0; font: inherit; }
 
+.home-intro { display: flex; gap: 16px; align-items: flex-start; }
+.home-mark { flex: 0 0 48px; width: 48px; height: 48px; image-rendering: pixelated; }
+.home-intro-copy { flex: 1; min-width: 0; }
+
 .dialog-title { margin: 0 0 8px; font-size: 16px; line-height: 16px; text-transform: uppercase; }
 
 .doc pre:focus-visible { outline: 2px dotted #fff; outline-offset: -3px; }
@@ -236,6 +240,8 @@ a.gem-btn { text-decoration: none; }
   .page__doc { flex: 0 0 auto; width: 100%; order: 1; }
   .page__side { position: static; flex: 0 0 auto; width: 100%; order: 2; }
   .page__side .toc-group { display: none; }
+  .home-intro { gap: 12px; }
+  .home-mark { flex-basis: 36px; width: 36px; height: 36px; }
   .gem-menubar { height: 32px; }
   .gem-menubar > a,
   .gem-menubar > button,

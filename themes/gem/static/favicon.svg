@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" shape-rendering="crispEdges">
+  <title>dev adjacent</title>
+  <rect width="256" height="256" fill="#ffffff"/>
+  <path d="M32 32H160V160H32ZM48 48V144H144V48Z" fill="#000000" fill-rule="evenodd"/>
+  <rect x="48" y="48" width="96" height="32" fill="#000000"/>
+  <path d="M96 96H224V224H96ZM112 112V208H208V112Z" fill="#000000" fill-rule="evenodd"/>
+  <rect x="112" y="112" width="96" height="32" fill="#000000"/>
+  <rect x="112" y="144" width="96" height="64" fill="#00aaa9"/>
+</svg>
