@@ -1,0 +1,7 @@
+name = "gem"
+license = "MIT"
+description = "GEM/TOS theme: 1px chrome, dithered title bars and the Atari ST 8x16 system font."
+min_version = "0.150.0"
+
+[author]
+name = "tom"

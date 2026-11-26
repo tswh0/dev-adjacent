@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode | default "en-us" }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} - {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta name="theme-color" content="#00aaa9">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" type="image/png" href="/favicon.png">
+{{ with .Site.Home.OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
+{{ end }}
+{{ $css := slice (resources.Get "css/gem.css") (resources.Get "css/site.css") | resources.Concat "gem.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<link rel="preload" href="/atarist-8x16.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body class="gem gem-desktop gem--3d">
+<div class="page">
+{{ partial "header" . }}
+{{ block "main" . }}{{ end }}
+{{ partial "footer" . }}
+</div>
+{{ $js := resources.Get "js/gem.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+</body>
+</html>

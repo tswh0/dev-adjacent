@@ -1,0 +1,14 @@
+{{ define "main" }}
+<main class="page__main page__main--single">
+  <section class="gem-dialog" role="alertdialog" aria-label="404">
+    <div class="gem-titlebar"><div class="gem-title"><span>404</span></div></div>
+    <div class="gem-dialog__body">
+      <div class="gem-alert">
+        <div class="gem-alert__icon">?</div>
+        <div class="gem-alert__text">Cannot find that page. It may have moved.</div>
+      </div>
+    </div>
+    <div class="gem-dialog__buttons"><a class="gem-btn is-default" href="{{ "/" | relURL }}">Home</a></div>
+  </section>
+</main>
+{{ end }}

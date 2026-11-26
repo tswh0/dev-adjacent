@@ -1,0 +1,27 @@
+{{ $posts := where site.RegularPages "Section" "posts" }}
+<aside class="page__side" id="contents">
+  <section class="gem-window" aria-label="Contents">
+    <div class="gem-titlebar"><div class="gem-title"><span>CONTENTS</span></div></div>
+    <div class="gem-body">
+      <ul class="side-list">
+        <li><a href="{{ "/" | relURL }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a></li>
+        <li><a href="{{ "/posts/" | relURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Posts</a></li>
+        <li><a href="{{ "/tags/" | relURL }}"{{ if eq .Section "tags" }} aria-current="page"{{ end }}>Tags</a></li>
+        <li><a href="{{ "/index.xml" | relURL }}">RSS feed</a></li>
+      </ul>
+      <fieldset class="gem-group side-group">
+        <legend>Site</legend>
+        <dl class="sys">
+          <dt>Posts</dt><dd>{{ len $posts }}</dd>
+          <dt>Tags</dt><dd>{{ len site.Taxonomies.tags }}</dd>
+          <dt>Latest</dt><dd>{{ with $posts.ByDate.Reverse }}{{ (index . 0).Date.Format "2006-01-02" }}{{ end }}</dd>
+          <dt>Licence</dt><dd>CC0 1.0</dd>
+        </dl>
+      </fieldset>
+      <div class="gem-check-row side-check">
+        <input class="gem-check" type="checkbox" id="tos4" checked>
+        <label for="tos4">TOS 4 colours</label>
+      </div>
+    </div>
+  </section>
+</aside>

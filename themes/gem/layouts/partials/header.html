@@ -1,0 +1,22 @@
+<nav class="gem-menubar" aria-label="Main">
+  <a class="gem-appname" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+  <div class="gem-menuwrap"><button data-menu="m-file" aria-haspopup="true" aria-expanded="false">File</button>
+    <ul class="gem-dropdown" id="m-file" role="menu">
+      <li><a href="{{ "/posts/" | relURL }}">Posts</a></li>
+      <li><a href="{{ "/tags/" | relURL }}">Tags</a></li>
+      <li class="gem-sep" role="separator"></li>
+      <li><a href="{{ "/index.xml" | relURL }}">RSS feed</a></li>
+    </ul>
+  </div>
+  <span class="gem-spacer"></span>
+  <div class="gem-menuwrap"><button data-menu="m-help" aria-haspopup="true" aria-expanded="false">Help</button>
+    <ul class="gem-dropdown gem-dropdown--right" id="m-help" role="menu">
+      {{ range site.Menus.main }}
+      {{ $u := .URL }}{{ if not (strings.HasPrefix $u "http") }}{{ $u = $u | relURL }}{{ end }}
+      <li><a href="{{ $u }}"{{ if strings.HasPrefix .URL "http" }} rel="noopener"{{ end }}>{{ .Name | title }}</a></li>
+      {{ end }}
+      <li class="gem-sep" role="separator"></li>
+      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener">CC0 1.0</a></li>
+    </ul>
+  </div>
+</nav>

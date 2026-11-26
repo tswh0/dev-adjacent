@@ -1,0 +1,19 @@
+{{ define "main" }}
+<main class="page__main">
+  <section class="gem-window page__doc" aria-label="{{ .Title }}">
+    <div class="gem-titlebar"><div class="gem-title"><span>{{ with .Params.slug }}{{ . | upper }}{{ else }}{{ .File.BaseFileName | upper }}{{ end }}.TXT</span></div></div>
+    <div class="gem-infoline">{{ .Date.Format "2006-01-02" }} · {{ partial "reading-time" . }}</div>
+    <div class="gem-body">
+      <article class="doc post">
+        <header class="post-head">
+          <h1 class="post-title">{{ .Title }}</h1>
+          <p class="post-tags">{{ with .Params.tags }}{{ range . }}<a class="tag" href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}{{ end }}</p>
+        </header>
+        <div class="post-content">{{ partial "content" . }}</div>
+        <p class="doc__end"><a class="gem-btn" href="{{ "/posts/" | relURL }}">&lt;- all posts</a></p>
+      </article>
+    </div>
+  </section>
+  {{ partial "sidebar" . }}
+</main>
+{{ end }}
