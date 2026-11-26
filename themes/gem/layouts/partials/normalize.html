@@ -1,0 +1,21 @@
+{{- $c := . -}}
+{{- $c = $c | replaceRE "&(lsquo|rsquo|#8216|#8217);" "'" -}}
+{{- $c = $c | replaceRE "&(ldquo|rdquo|#8220|#8221);" "\"" -}}
+{{- $c = $c | replaceRE "&(ndash|mdash|#8211|#8212);" "-" -}}
+{{- $c = $c | replaceRE "&(hellip|#8230);" "..." -}}
+{{- $c = $c | replaceRE "&(larr|#8592);" "<-" -}}
+{{- $c = $c | replaceRE "&(rarr|#8594);" "->" -}}
+{{- $c = $c | replaceRE "&nbsp;" " " -}}
+{{- $c = $c | replaceRE "[\\x{2018}\\x{2019}]" "'" -}}
+{{- $c = $c | replaceRE "[\\x{201C}\\x{201D}]" "\"" -}}
+{{- $c = $c | replaceRE "[\\x{2013}\\x{2014}]" "-" -}}
+{{- $c = $c | replaceRE "\\x{2026}" "..." -}}
+{{- $c = $c | replaceRE "\\x{2190}" "<-" -}}
+{{- $c = $c | replaceRE "\\x{2192}" "->" -}}
+{{- $c = $c | replaceRE "\\x{2502}" "|" -}}
+{{- $c = $c | replaceRE "\\x{2500}" "-" -}}
+{{- $c = $c | replaceRE "[\\x{250C}\\x{2510}\\x{2514}\\x{2518}\\x{251C}\\x{2524}\\x{252C}\\x{2534}\\x{253C}]" "+" -}}
+{{- $c = $c | replaceRE "\\x{20AC}" "EUR" -}}
+{{- $c = $c | replaceRE "\\x{1F3ED}|\\x{26A1}" "" -}}
+{{- $c = $c | safeHTML -}}
+{{- return $c -}}

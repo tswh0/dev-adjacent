@@ -9,6 +9,12 @@
         <li><a href="{{ "/tags/" | relURL }}"{{ if eq .Section "tags" }} aria-current="page"{{ end }}>Tags</a></li>
         <li><a href="{{ "/index.xml" | relURL }}">RSS feed</a></li>
       </ul>
+      {{ if .IsPage }}{{ with .TableOfContents }}
+      <fieldset class="gem-group toc-group">
+        <legend>On this page</legend>
+        {{ partial "toc-list" $ }}
+      </fieldset>
+      {{ end }}{{ end }}
       <fieldset class="gem-group side-group">
         <legend>Site</legend>
         <dl class="sys">

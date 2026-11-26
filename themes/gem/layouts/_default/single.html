@@ -9,6 +9,12 @@
           <h1 class="post-title">{{ .Title }}</h1>
           <p class="post-tags">{{ with .Params.tags }}{{ range . }}<a class="tag" href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}{{ end }}</p>
         </header>
+        {{ if .IsPage }}{{ with .TableOfContents }}
+        <details class="post-toc">
+          <summary>On this page</summary>
+          {{ partial "toc-list" $ }}
+        </details>
+        {{ end }}{{ end }}
         <div class="post-content">{{ partial "content" . }}</div>
         <p class="doc__end"><a class="gem-btn" href="{{ "/posts/" | relURL }}">&lt;- all posts</a></p>
       </article>

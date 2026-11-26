@@ -20,6 +20,12 @@ body { margin: 0; }
 .page__side { flex: 0 0 240px; position: sticky; top: 24px; }
 .page__side .gem-body { padding: 8px; }
 
+.post-content h1 { display: none; }
+
+@media (min-width: 821px) {
+  .page__side { max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: thin; }
+}
+
 .page__main--single { justify-content: center; align-items: center; }
 
 .hero { margin: 0 0 24px; }
@@ -141,6 +147,18 @@ a.gem-btn { text-decoration: none; }
 .side-list a:hover, .side-list a[aria-current="page"] { background: #000; color: #fff; }
 
 .side-group { margin-top: 8px; }
+
+.toc-group { margin-top: 8px; }
+.toc ul { margin: 0; padding: 0; list-style: none; }
+.toc li { padding: 0; text-indent: 0; line-height: 24px; }
+.toc li::before { content: none; }
+.toc a { display: block; padding: 0 4px; color: #000; text-decoration: none; overflow-wrap: anywhere; }
+.toc a:hover { background: #000; color: #fff; }
+
+.post-toc { display: none; }
+
+.doc h2, .doc h3 { scroll-margin-top: 24px; }
+
 .sys { display: grid; grid-template-columns: max-content 1fr; gap: 2px 8px; margin: 4px 0 0; }
 .sys dt, .sys dd { margin: 0; line-height: 20px; }
 .sys dd { overflow-wrap: anywhere; }
@@ -156,6 +174,13 @@ a.gem-btn { text-decoration: none; }
   .page__main { flex-direction: column; align-items: stretch; padding: 8px; }
   .page__doc { flex: 1 1 auto; width: 100%; order: 1; }
   .page__side { position: static; flex: 0 0 auto; width: 100%; order: 2; }
+  .page__side .toc-group { display: none; }
+  .post-toc { display: block; margin: 0 0 16px; border: 1px solid #000; }
+  .post-toc summary { display: block; padding: 4px; background: #000; color: #fff; line-height: 16px; cursor: pointer; list-style: none; }
+  .post-toc summary::-webkit-details-marker { display: none; }
+  .post-toc summary::before { content: "+ "; }
+  .post-toc[open] summary::before { content: "- "; }
+  .post-toc .toc { padding: 4px 8px; }
 }
 
 @media (max-width: 480px) {
