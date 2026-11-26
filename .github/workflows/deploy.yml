@@ -48,3 +48,6 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             "$VPS_USER@$VPS_HOST" /usr/local/bin/deploy-blog
+      - name: Smoke test
+        if: steps.check.outputs.ready == 'true'
+        run: curl -fsS --retry 5 --retry-delay 2 https://blog.ewlf.de/ >/dev/null
